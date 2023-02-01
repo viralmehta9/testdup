@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link id="mystylesheet" rel="stylesheet" type="text/css" href="{% static 'blogs/light.css' %}">
+    </head>
+    <body>
+       <script type="text/javascript">
+        //  https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css
+           
+            var setTheme = localStorage.getItem('theme')
+            var cssFiles = "{% static 'blogs' %}"
+           
+            console.log('theme:', setTheme)
+    
+            if (setTheme == null){
+              swapStyle('dark.css')
+            }else{
+              swapStyle(setTheme)
+            }
+
+            function swapStyle(sheet){
+                document.getElementById('mystylesheet').href = cssFiles + '/' + sheet;
+                localStorage.setItem('theme', sheet);
+            }
+
+        </script> 
+    </body>
+</html>

@@ -1,0 +1,136 @@
+{% extends "article_app/program_base_page.html" %}
+{% block name %}
+    {{article_object.article_title}}
+{% endblock %}
+<br>
+{% block explaination %}
+<p>
+    <p>We are given a sorted array that is rotated by some index. We have to find the minimum element in the rotated array</p>
+<br>
+<br>
+    <p>
+        For example the given sorted array is [1, 2, 3, 4, 5, 6]. Suppose it is rotated left by 3. <br>
+        The sorted rotated array will be [4, 5, 6, 1, 2, 3] <br>
+        Here we have to find the minimum element which is 1.
+    </p>
+    <p>
+        Ideally we can search the minimum element from this array by checking each element and comparing it against the minimum element <br>
+        But this will be a linear search and will take O(n) time if the element is at the last index <br>
+    </p>
+    <p>
+        Since the array is sorted, we can do better in searching the min element by using a binary search <br>
+        Binary search is a search mechanism where we divide the array and look for the array in that part of array, essentially <br>
+        dividing our search size into half <br>
+        But, here since the array is also rotated, we need to check for few additional conditions since the minimum element is no longer at the first position
+    </p>
+</p>
+<br>
+<p>
+    <h5>
+        Understand binary search for sorted and rotated array
+    </h5>
+    <p>
+        When we closely look at the sorted and rotated array, there are 3 different cases that are possible. <br>
+        And it does not matter whether the array is right rotated or left rotated.
+    </p>
+    <ol>
+        <li>
+            <h5> Case 1: Array is not rotated at all </h5> 
+            <ul> Example: int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9}
+                <li>In this case the min element is at the first position and the max element is at the last position</li>
+                <li>arr[0] < arr[arr.length-1] holds true in this case </li>
+            </ul>
+        </li>
+        <li>
+            <h5> Case 2: Minimum element is to the right side of middle element </h5> 
+            <ul> Example: int[] arr = {4, 5, 6, 7, 8, 9, 1, 2, 3}
+                <li>In this case, the element in the middle is greater than the leftmost and rightmost element</li>
+                <li>Element 8 is greater then 4 and 3 </li>
+                <li>To do a binary search in the right side of mid element 8, we can compare element at mid position with element at last position</li>
+                <li>array[mid] > array[last] holds true in this case</li>
+            </ul>
+        </li>
+        <li>
+            <h5> Case 3: Minimum element is to the left side of middle element</h5> 
+            <ul> Example: int[] arr = {7, 8, 9, 1, 2, 3, 4, 5, 6}
+                <li>In this case, the element in the middle is less than the leftmost and rightmost element in the array</li>
+                <li>Element 2 is less then 7 and 6 and the min element falls to the left of 2, so we want to search in the left side of mid element</li>
+                <li>In this case if you notice, the condition for case 2 array[mid] > array[right] becomes false</li>
+                <li>This means when the condition for case 2 is false, we can safely assume the min element will be on the left side of mid element</li>
+            </ul>
+        </li>
+    </ol>
+</p>
+<p>Using the above cases and conditions we do a binary search on the rotated sorted array and find the min element</p>
+<p>
+    <h5>Algorithm</h5>
+    <ol>
+       <li>Initialize the first, last element</li>
+        <li>loop while first is less than last element
+            <ul>
+                <li>Initialize mid element</li>
+                <li> If the mid element is greater than last element then search in right half</li>
+                <li> Else search in left half</li>
+            </ul>
+        </li>
+        <li> return first element</li>
+    </ol>
+</p>
+<br>
+<p>
+    <h5>
+        Complexity:
+    </h5>
+
+</p>
+
+{% endblock %}
+
+{% block code %}
+
+<pre>
+  <code>
+   
+class FindMinInSortedRotatedArray{
+
+    public static int findMin(int array[])
+    {
+        int first = 0;
+        int last = array.length - 1;
+        while(first < last) 
+        {
+            int mid = first + (last - first) / 2;
+            if(array[mid] > array[last]){
+                first = mid + 1;
+            } 
+            else{
+                last = mid;
+            }
+        }
+
+        return array[first];
+        
+    }
+    
+    public static void main(String[] args)
+    {
+        
+        int array[] = {7, 8, 1, 2, 3, 4, 5, 6};
+        
+        FindMinInSortedRotatedArray fm = new FindMinInSortedRotatedArray();
+        int n = fm.findMin(array);
+        
+        System.out.println("Minimum element in the sorted and rotated array is : " + n);
+    }
+
+}
+  </code>
+</pre>
+{% endblock %}
+
+{% block output %}
+<p>
+    Minimum element in the sorted and rotated array is : 1<br>
+</p>
+{% endblock %}
+<br>

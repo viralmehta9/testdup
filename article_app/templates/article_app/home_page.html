@@ -1,0 +1,29 @@
+{% extends "article_app/base.html" %}
+{% block content %}
+    {% for topic in home_page_buttons %} 
+    {% if topic.topic_display_name != "General" %} 
+       <a href="{{topic.topic_slug}}"> 
+            <button>{{topic.topic_display_name}}</button>
+        </a> 
+    {% endif %} 
+    {% endfor %}
+{% endblock content %}
+<p>
+    <br>
+</p>
+{% block programList-column1 %}
+    {% for program in home_page_links %}
+        <a href="{{program.article_slug}}" id="one">
+            {{ program.article_name }}
+        </a><br>
+    {% endfor %}
+{% endblock programList-column1 %}
+
+{% block programList-column2 %}
+    {% for program in program_list_column2 %}
+        <a href="{{program.hyper_link}}">
+            {{ program.name }}
+        </a><br>
+    {% endfor %}
+{% endblock programList-column2 %}
+

@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html color-mode="light" lang="en">
+<head>
+      {% load highlightjs %}
+      <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/github.min.css" />
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name=”robots” content="index, follow">
+     {% block meta_tags %}{% endblock %}
+     
+ 
+     <!-- Bootstrap CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'blogs/main.css' %}">
+
+    <link id="mystylesheet" rel="stylesheet" type="text/css" href="{% static 'blogs/light.css' %}">
+
+</head>
+<body>
+  
+    <script type="text/javascript">
+
+        var setTheme = localStorage.getItem('theme')
+        var cssFile = "{% static 'blogs' %}"
+        console.log('theme:', setTheme)
+
+        if (setTheme == null){
+          swapStyle('light.css')
+        }else{
+          swapStyle(setTheme)
+        }
+
+        function swapStyle(sheet){
+          document.getElementById('mystylesheet').href = cssFile + '/' + sheet
+          localStorage.setItem('theme', sheet)
+        }
+    </script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  {% include 'article_app/header-navigation-bar.html'%}
+      <!-- Required left panel here -->
+    
+      <main role="main" class="container">
+        <div class="row">
+          <div class="col-md-8" style="width: auto;">
+            {% block content %} {% endblock %}
+          </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-8" style="width: auto;">
+              {% block programList-column1 %} {% endblock %}
+            </div>
+            <div class="col-md-8" style="width: auto;">
+              {% block programList-column2 %} {% endblock %}
+            </div>
+          </div>
+
+          <body>
+            <h3>   {% block name %}  {% endblock %} </h3>
+            {% block explaination %}
+
+              {% endblock %}
+            <div style="width: 1000px; margin-right:auto;">
+              {% block code %}
+              {% endblock %}
+            </div>
+          </body>
+           
+          
+          </div>
+    
+        </div>
+      </main>
+      <!-- Required right panel here -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+</body>
+
+<!-- Required footer here -->
+
+</html>

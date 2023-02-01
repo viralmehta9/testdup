@@ -1,0 +1,174 @@
+{% extends "article_app/program_base_page.html" %}
+
+{% block name %}
+Binary Search Tree: Search a node in BST using Iterative Approach
+{% endblock %}
+
+{% block explaination %}
+In this article, we are going to see how to find a node with a given data in a BST and <br>
+return it if the node with the data exists else we return NULL. <br>
+ 
+<p>
+    <h5>
+        We use the BST Properties:
+    </h5>
+    All Nodes to the left of the current node has lower data than the current node <br>
+    All Nodes to the right of the current node has greater data than the current node <br>
+    
+</p>
+
+<p>
+    <h5>
+        Algorithm:
+    </h5>
+    
+    <p> <ol>
+          <li>Start with the root node and store it in a pointer named current. </li>
+          <li>Compare the value of the current node with the dataToSearch: 
+            <ul>
+                <li>
+                    if the value is equal to current node’s value then dataToSearch is found and so return the current pointer
+                </li>
+                <li>
+                    else if the given value is less than current, point current to the left of current
+                </li>
+                <li>
+                    else point current to the right
+                </li>
+            </ul>
+          </li>
+          <li>Run the 2nd Step till the given value is found in BST or the current pointer is null, if current is null it means that the value is not present in the BST and return null.</li>
+
+        </ol></p>
+    
+</p>
+<p>
+    <h5>
+        Complexity:
+    </h5>
+    <p>
+        Average Case Time Complexity: O(LogN) <br>
+        Worst Case Time Complexity: O(N) <br>
+        Space Complexity: (1)  <br>        
+    </p>
+
+</p>
+<p>
+    The Time Complexity heavily depends on the structure of the given tree, <br>
+    if the given tree is balanced then the time complexity will be O(logN) and  <br>
+    for a skew tree the time complexity will be O(N) <br>
+</p>
+
+{% endblock %}
+
+{% block code %}
+
+<pre>
+  <code>
+    class BinarySearchTree {
+        class Node {
+          // Node class for Binary Search Tree
+          int data;
+          Node left, right;
+        
+          // Constructor to set the value of the node
+          Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+          }
+        }
+        
+        private Node root = null;
+        
+        // Insert array of num into the BST
+        public void insertArray(int nums[]) {
+          for (int i = 0; i < nums.length; i++) {
+            insert(nums[i]);
+          }
+        }
+        
+        // Insert a value in BST Iteratively
+        public void insert(int data) {
+          // Check if root is null,
+          // if null then create a node and make it root
+          if (root == null) {
+            root = new Node(data);
+            return;
+          }
+        
+          // Start traversing from the root and find the position of node to insert
+          Node current = root;
+          while (current != null) {
+            if (data < current.data) {
+              // Insert the node if the position is empty
+              if (current.left == null) {
+                current.left = new Node(data);
+                return;
+              }
+              current = current.left;
+            } else {
+              if (current.right == null) {
+                // Insert the node if the position is empty
+                current.right = new Node(data);
+                return;
+              }
+              current = current.right;
+            }
+          }
+        }
+        
+        Node findNodeIteratively(int dataToSearch) {
+          // Initialize current as the root node
+          Node current = root;
+        
+          // Run the loop till current is not null
+          while (current != null) {
+            // Check if the data of current node is equal to the dataToSearch, if equal return
+            // the current node
+            if (current.data == dataToSearch)
+              return current;
+        
+            // If the dataToSearch is not equal then,
+            // Point current to left if dataToSearch is less than the current node data
+            // else Point current to right if dataToSearch is greater than the current node data
+            if (dataToSearch < current.data)
+              current = current.left;
+            else
+              current = current.right;
+          }
+        
+          // If dataToSearch is not found in BST, then return null
+          return null;
+        }
+        
+        public static void main(String[] args) {
+          int[] nums = { 8, 2, 6, 12, 11, 10 };
+        
+          BinarySearchTree bst = new BinarySearchTree();
+          bst.insertArray(nums);
+        
+          if (bst.findNodeIteratively(12) != null) {
+            System.out.println("Data 12 found in the BST");
+          } else {
+            System.out.println("Data 12 not found in the BST");
+          }
+        
+          if (bst.findNodeIteratively(9) != null) {
+            System.out.println("Data 9 found in the BST");
+          } else {
+            System.out.println("Data 9 not found in the BST");
+          }
+        }
+       }
+       
+       
+  </code>
+</pre>
+{% endblock %}
+
+{% block output %}
+Data 12 found in the BST <br>
+Data 9 not found in the BST <br>
+<br>
+{% endblock %}
